@@ -4,7 +4,10 @@ const _ = require('underscore');
 const User = require('../models/user');
 const app = express();
 
-app.get('/user', function(req, res) {
+const { verifyToken, verifyRole } = require('../middlewares/authentication');
+
+app.get('/user', verifyToken, function(req, res) {
+
 
     let page = req.query.page || 0;
     page = Number(page);
@@ -37,7 +40,7 @@ app.get('/user', function(req, res) {
         });
 });
 
-app.post('/user', function(req, res) {
+app.post('/user', [verifyToken, verifyRole], function(req, res) {
 
     let body = req.body;
 
@@ -62,7 +65,7 @@ app.post('/user', function(req, res) {
     });
 });
 
-app.put('/user/:id', function(req, res) {
+app.put('/user/:id', [verifyToken, verifyRole], function(req, res) {
     let id = req.params.id;
 
     let body = _.pick(req.body, ['name', 'email', 'image', 'role', 'state']);
@@ -87,7 +90,7 @@ app.put('/user/:id', function(req, res) {
 
 });
 
-app.delete('/user/:id', function(req, res) {
+app.delete('/user/:id', [verifyToken, verifyRole], function(req, res) {
 
     let id = req.params.id;
     let updateState = { state: false };
@@ -105,28 +108,6 @@ app.delete('/user/:id', function(req, res) {
         });
 
     });
-
-    // User.findByIdAndRemove(id, (err, userDeleted) => {
-    //     if (err) {
-    //         return res.status(400).json({
-    //             "errorCode": 400,
-    //             "message": err.message
-    //         });
-    //     };
-
-    //     if (!userDeleted) {
-    //         return res.status(404).json({
-    //             "errorCode": 404,
-    //             "message": `User with id: ${id} not found`
-    //         });
-    //     };
-
-    //     res.json({
-    //         status: 'success',
-    //         userDeleted
-    //     })
-    // });
-
 
 });
 
