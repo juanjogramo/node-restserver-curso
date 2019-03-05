@@ -82,7 +82,7 @@ app.put('/user/:id', [verifyToken, verifyRole], function(req, res) {
             }
 
             res.json({
-                status: 'Success',
+                status: 'success',
                 user: userUpdated
             });
 
