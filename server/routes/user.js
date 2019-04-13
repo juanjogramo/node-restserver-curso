@@ -98,8 +98,8 @@ app.delete('/user/:id', [verifyToken, verifyRole], function(req, res) {
     User.findByIdAndUpdate(id, updateState, { new: true }, (err, userUpdated) => {
         if (err) {
             return res.status(400).json({
-                "errorCode": 400,
-                "message": err.message
+                errorCode: 400,
+                message: err.message
             });
         }
         res.json({

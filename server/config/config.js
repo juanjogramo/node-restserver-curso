@@ -11,7 +11,8 @@ let remoteDB = process.env.MONGO_URL
 process.env.URLDB = isDevEnv ? localDB : remoteDB;
 
 // Expires Date:
-process.env.EXPIRES = 60 * 60 * 24 * 30;
+// process.env.EXPIRES = 60 * 60 * 24 * 30;
+process.env.EXPIRES = '48h';
 
 // Authentication Seed
 process.env.SEED = process.env.SEED || 'secretDev';
